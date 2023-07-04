@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 
+import { BACKEND_BASE_URL } from "../../config/config";
+
 const ImagePage = () => {
 
   const iId = useParams().imgId;
@@ -12,7 +14,7 @@ const ImagePage = () => {
     (async () => {
       if (!isNaN(iId)) {
         try {
-          const response = await fetch(`http://localhost:443/images/${iId}`);
+          const response = await fetch(`${BACKEND_BASE_URL}/images/${iId}`);
           const data = await response.json();
           console.log(data)
           setData(data);

@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { AppContext } from "../context";
 
 import { FiExternalLink } from 'react-icons/fi';
+import { BACKEND_BASE_URL } from '../config/config'
 
 const ImagesList = () => {
 
@@ -13,7 +14,7 @@ const ImagesList = () => {
   useEffect(() => {
     (async () => {
       try {
-        const response = await fetch('http://localhost:443/imageslist');
+        const response = await fetch(`${BACKEND_BASE_URL}/imageslist`);
         const data = await response.json();
         setImages(data.result);
       } catch (error) {

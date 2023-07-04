@@ -1,7 +1,7 @@
 import React, { useState, useRef, useContext } from 'react';
 import styled from 'styled-components';
 import { AiOutlineCloudUpload } from 'react-icons/ai';
-
+import { BACKEND_BASE_URL } from '../config/config';
 import { AppContext } from '../context';
 
 function UploadImage() {
@@ -43,7 +43,7 @@ function UploadImage() {
       console.log(base64Image)
   
       try {
-        const response = await fetch('http://localhost:443/getImg', requestOptions);
+        const response = await fetch(`${BACKEND_BASE_URL}/getImg`, requestOptions);
         const data = await response.json();
         if (data.ok) {
 
