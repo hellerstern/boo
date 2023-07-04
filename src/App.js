@@ -32,39 +32,6 @@ function App() {
 
   const [savedFileName, setSavedFileName] = useState('');
 
-  const handleImageUpload = (event) => {
-    const file = event.target.files[0];
-    const reader = new FileReader();
-
-    reader.onloadend = () => {
-      setBase64Image(reader.result);
-    };
-
-    reader.readAsDataURL(file);
-  };
-
-  const uploadToServer = async () => {
-    (async () => {
-      const requestOptions = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ file: base64Image })
-      };
-  
-      try {
-        const response = await fetch('http://localhost:443/getImg/', requestOptions);
-        const data = await response.json();
-        
-        if (data.ok) {
-          alert('Uploaded!');
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    })()
-  }
-
-
   const handleDownload = () => {
 
     if (!base64Image) {
@@ -92,7 +59,7 @@ function App() {
   const webcamRef = useRef(null);
 
   const captureScreen = async () => {
-    const canvas = await html2canvas(document.documentElement);
+    const canvas = await html2canvas(document.getElementsByTagName('video')[0]);
     const imageDataUrl = canvas.toDataURL('image/png');
     setBase64Image(imageDataUrl);
   };
@@ -150,7 +117,6 @@ const Button = styled.button`
 
 const SnapshotedImg = styled.img`
   border-radius: 12px;
-  border: 0.5px solid #EEE;
   background: rgba(196, 196, 196, 0.00);
   width: 300px;
 `

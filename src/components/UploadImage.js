@@ -7,9 +7,11 @@ function UploadImage() {
   const uploadRef = useRef(null);
 
   const [base64Image, setBase64Image] = useState(null);
+  const [fileName, setFileName] = useState(null);
 
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
+    setFileName(file.name);
     const reader = new FileReader();
 
     reader.onloadend = () => {
@@ -28,11 +30,14 @@ function UploadImage() {
       const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ file: base64Image })
+        body: JSON.stringify({ 
+          file: base64Image,
+          fileName
+        })
       };
   
       try {
-        const response = await fetch('http://174.138.188.39:80/getImg/', requestOptions);
+        const response = await fetch('https://boo-server.onrender.com/getImg/', requestOptions);
         const data = await response.json();
         
         if (data.ok) {
@@ -64,7 +69,8 @@ function UploadImage() {
 }
 
 const Wrapper = styled.div`
-  
+  margin-top: 30px;
+  padding-bottom: 100px;
 `
 
 const UploadDiv = styled.div`
