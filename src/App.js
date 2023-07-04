@@ -2,7 +2,8 @@ import React, { useEffect, useState, useRef } from 'react';
 import Webcam from 'react-webcam';
 import html2canvas from 'html2canvas';
 import styled from 'styled-components';
-import WebcamCapture from './WebcamCapture';
+import WebcamCapture from './components/WebcamCapture';
+import UploadImage from './components/UploadImage';
 
 const ScreenCamera = () => {
   const webcamRef = useRef(null);
@@ -97,20 +98,20 @@ function App() {
   };
   
   return (
-    <WebcamCapture></WebcamCapture>
-    // <Wrapper>
-    //   <div className='buttons'>
-    //     <Button onClick={captureScreen}> Capture Screen </Button>
-    //     <Button onClick={handleDownload}> Save on your local </Button>
+    <Wrapper>
+      <div className='buttons'>
+        <Button onClick={captureScreen}> Capture Screen </Button>
+        <Button onClick={handleDownload}> Save on your local </Button>
 
-    //     <Input placeholder='Enter new image name' value={savedFileName} onChange={(e) => setSavedFileName(e.target.value)}></Input>
-    //   </div>
-    //   {base64Image ? (
-    //     <SnapshotedImg src={base64Image} alt="Screen Camera" />
-    //   ) : (
-    //     <Webcam ref={webcamRef} />
-    //   )}
-    // </Wrapper>
+        <Input placeholder='Enter new image name' value={savedFileName} onChange={(e) => setSavedFileName(e.target.value)}></Input>
+      </div>
+      {base64Image ? (
+        <SnapshotedImg src={base64Image} alt="Screen Camera" />
+      ) : (
+        <Webcam ref={webcamRef} />
+      )}
+      <UploadImage />
+    </Wrapper>
   );
 }
 
@@ -125,6 +126,11 @@ const Wrapper = styled.div`
     display: flex;
     gap: 30px;
     margin: 40px;
+  }
+
+  video {
+    width: 500px;
+    height: 300px;
   }
 `
 

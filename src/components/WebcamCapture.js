@@ -11,7 +11,7 @@ const WebcamCapture = () => {
   }, [webcamRef, setImgSrc]);
 
   return (
-    <>
+    <>  
       <Webcam
         audio={false}
         ref={webcamRef}
