@@ -1,8 +1,12 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useContext } from 'react';
 import styled from 'styled-components';
 import { AiOutlineCloudUpload } from 'react-icons/ai';
 
+import { AppContext } from '../context';
+
 function UploadImage() {
+
+  const AppData = useContext(AppContext);
 
   const uploadRef = useRef(null);
 
@@ -23,7 +27,7 @@ function UploadImage() {
 
   const uploadToServer = async () => {
     if (base64Image === null) {
-      alert('Upload new image!');
+      alert('Please Upload new image');
       return
     }
     (async () => {
@@ -35,12 +39,15 @@ function UploadImage() {
           fileName
         })
       };
+
+      console.log(base64Image)
   
       try {
-        const response = await fetch('https://boo-server.onrender.com/getImg/', requestOptions);
+        const response = await fetch('http://localhost:443/getImg', requestOptions);
         const data = await response.json();
-        
         if (data.ok) {
+
+          AppData.setNewImgFlag(!AppData.newImgFlag);
           alert('Uploaded!');
         }
       } catch (error) {
@@ -63,7 +70,11 @@ function UploadImage() {
         <Button onClick={uploadToServer}>Upload Img</Button>
   
       </div>
-      <img src={base64Image} alt='img' width={400} style={{marginTop: '30px'}}></img>
+      {
+        base64Image && (
+          <img src={base64Image} alt='img' width={400} style={{marginTop: '30px'}}></img>
+        )
+      }
     </Wrapper>
   );
 }
@@ -71,6 +82,7 @@ function UploadImage() {
 const Wrapper = styled.div`
   margin-top: 30px;
   padding-bottom: 100px;
+  width: 45%;
 `
 
 const UploadDiv = styled.div`
