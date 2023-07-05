@@ -7,6 +7,7 @@ import { AppContext } from '../context';
 function UploadImage() {
 
   const AppData = useContext(AppContext);
+  const [loadingFlag, setLoadingFlag] = useState(false);
 
   const uploadRef = useRef(null);
 
@@ -43,6 +44,7 @@ function UploadImage() {
       console.log(base64Image)
   
       try {
+        setLoadingFlag(true);
         const response = await fetch(`${BACKEND_BASE_URL}/getImg`, requestOptions);
         const data = await response.json();
         if (data.ok) {
@@ -50,7 +52,9 @@ function UploadImage() {
           AppData.setNewImgFlag(!AppData.newImgFlag);
           alert('Uploaded!');
         }
+        setLoadingFlag(false);
       } catch (error) {
+        setLoadingFlag(false);
         console.log(error);
       }
     })()
@@ -67,9 +71,23 @@ function UploadImage() {
       </UploadDiv>
       <div>
         <input type="file" accept="image/*" onChange={handleImageUpload} ref={uploadRef} style={{display: 'none'}}/>
-        <Button onClick={uploadToServer}>Upload Img</Button>
-  
+
+        {
+          !loadingFlag && (
+            <Button onClick={uploadToServer}>Upload Img</Button>
+          )
+        }
+        
       </div>
+
+      {
+        loadingFlag && (
+          <LoadingContainer>
+            <div className="lds-ripple"><div></div><div></div></div>
+          </LoadingContainer>
+        )
+      }
+
       {
         base64Image && (
           <img src={base64Image} alt='img' width={400} style={{marginTop: '30px'}}></img>
@@ -86,6 +104,8 @@ const Wrapper = styled.div`
 `
 
 const UploadDiv = styled.div`
+
+  position: relative;
   border-radius: 25px;
   border: 3px dashed #68676E;
   background: rgba(196, 196, 196, 0.00);
@@ -122,6 +142,60 @@ const Button = styled.button`
   line-height: normal;
   padding: 10px 14px;
   margin: 30px 0;
+`
+
+const LoadingContainer = styled.div`
+  margin-top: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .lds-ripple {
+    display: inline-block;
+    position: relative;
+    width: 80px;
+    height: 80px;
+  }
+  .lds-ripple div {
+    position: absolute;
+    border: 4px solid #fff;
+    opacity: 1;
+    border-radius: 50%;
+    animation: lds-ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+  }
+  .lds-ripple div:nth-child(2) {
+    animation-delay: -0.5s;
+  }
+  @keyframes lds-ripple {
+    0% {
+      top: 36px;
+      left: 36px;
+      width: 0;
+      height: 0;
+      opacity: 0;
+    }
+    4.9% {
+      top: 36px;
+      left: 36px;
+      width: 0;
+      height: 0;
+      opacity: 0;
+    }
+    5% {
+      top: 36px;
+      left: 36px;
+      width: 0;
+      height: 0;
+      opacity: 1;
+    }
+    100% {
+      top: 0px;
+      left: 0px;
+      width: 72px;
+      height: 72px;
+      opacity: 0;
+    }
+  }
+
 `
 
 export default UploadImage;
