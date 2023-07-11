@@ -7,6 +7,7 @@ import { AppContext } from '../context';
 function UploadImage() {
 
   const AppData = useContext(AppContext);
+  const [apiKey, setApikey] = useState('');
   const [loadingFlag, setLoadingFlag] = useState(false);
 
   const uploadRef = useRef(null);
@@ -48,9 +49,12 @@ function UploadImage() {
         const response = await fetch(`${BACKEND_BASE_URL}/getImg`, requestOptions);
         const data = await response.json();
         if (data.ok) {
-
-          AppData.setNewImgFlag(!AppData.newImgFlag);
-          alert('Uploaded!');
+          if (data.result.flag === 0) {
+            alert('You are already registered');
+          } else {
+            AppData.setNewImgFlag(!AppData.newImgFlag);
+            setApikey(data.result.apikey);
+          }
         }
         setLoadingFlag(false);
       } catch (error) {
@@ -87,7 +91,11 @@ function UploadImage() {
           </LoadingContainer>
         )
       }
-
+      {
+        apiKey !== '' && (
+          <h2 style={{color: 'white'}}>API-KEY: {apiKey}</h2>
+        )
+      }
       {
         base64Image && (
           <img src={base64Image} alt='img' width={400} style={{marginTop: '30px'}}></img>
@@ -197,5 +205,4 @@ const LoadingContainer = styled.div`
   }
 
 `
-
 export default UploadImage;

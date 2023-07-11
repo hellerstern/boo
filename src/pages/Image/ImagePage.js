@@ -72,10 +72,6 @@ const Wrapper = styled.div`
   h1 {
     margin: 0;
   }
-
-
-  
-
 `
 
  const LoadingEffect = styled.div`
