@@ -50,8 +50,9 @@ function UploadImage() {
         const data = await response.json();
         if (data.ok) {
           if (data.result.flag === 0) {
-            alert('You are already registered');
+            alert('Customer Found');
           } else {
+            alert('New Customer Added')
             AppData.setNewImgFlag(!AppData.newImgFlag);
             setApikey(data.result.apikey);
           }

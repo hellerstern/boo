@@ -9,8 +9,8 @@ const LoginPage = () => {
 
   const navigate = useNavigate();
 
-  const [apikey, setApikey] = useState('JpjVBxNDV2zCXJcV9zSk2yTDCrGQfjUr');
-  const [paraphrase, setParaphrase] = useState('Welcome22023$');
+  const [apikey, setApikey] = useState('');
+  const [paraphrase, setParaphrase] = useState('');
   const [loadingFlag, setLoadingFlag] = useState('false');
 
   const setCookieWithExpiration = (cookieName, cookieValue) => {
