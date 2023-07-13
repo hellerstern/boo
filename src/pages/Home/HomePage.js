@@ -1,4 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
 import Webcam from 'react-webcam';
 import html2canvas from 'html2canvas';
 import styled from 'styled-components';
@@ -7,9 +9,17 @@ import ImagesList from '../../components/ImagesList';
 
 const HomePage = () => {
 
+  const navigate = useNavigate();
+
   const [base64Image, setBase64Image] = useState(null);
 
   const [savedFileName, setSavedFileName] = useState('');
+
+  useEffect(() => {
+    if (!Cookies.get('isValid')) {
+      navigate('/');
+    }
+  }, [])
 
   const handleDownload = () => {
 

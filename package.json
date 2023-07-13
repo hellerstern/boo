@@ -10,6 +10,7 @@
     "carbon-components": "^10.58.3",
     "carbon-components-react": "^8.29.1",
     "html2canvas": "^1.4.1",
+    "js-cookie": "^3.0.5",
     "react": "^18.2.0",
     "react-base64-downloader": "^2.1.7",
     "react-dom": "^18.2.0",

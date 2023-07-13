@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import HomePage from './pages/Home/HomePage';
 import Provider from './Provider';
 import ImagePage from './pages/Image/ImagePage';
+import LoginPage from './pages/Login/LoginPage';
 
 // const ScreenCamera = () => {
 //   const webcamRef = useRef(null);
@@ -31,9 +32,10 @@ function App() {
     <Provider>
       <Router>
         <Routes>
-          <Route path='/' element={<HomePage />}></Route>
-          <Route path='/images/:imgId' element={<ImagePage />}></Route>
-          <Route path='*' element={<h1>What are you doing here?</h1>}></Route>
+          <Route path='/' element={<LoginPage />} />
+          <Route path='/home' element={<HomePage />} />
+          <Route path='/images/:imgId' element={<ImagePage />} />
+          <Route path='*' element={<h1>What are you doing here?</h1>} />
         </Routes>
       </Router>
     </Provider>

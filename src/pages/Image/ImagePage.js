@@ -1,10 +1,19 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 
 import { BACKEND_BASE_URL } from "../../config/config";
 
 const ImagePage = () => {
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!sessionStorage.getItem('isValid')) {
+      navigate('/');
+    }
+  }, [])
 
   const iId = useParams().imgId;
   const [data, setData] = useState(null);
